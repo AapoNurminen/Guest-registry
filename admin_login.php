@@ -2,8 +2,8 @@
 session_start();
 
 // Hardcoded admin credentials
-$admin_email = "admin@example.com";
-$admin_password = "securepassword123"; // Change this to your desired password
+$admin_email = "admin@admin";
+$admin_password = "admin"; // Change this to your desired password
 
 // Admin login logic
 $loginMessage = "";
