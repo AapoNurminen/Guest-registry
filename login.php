@@ -1,4 +1,5 @@
 <?php
+session_start(); // Start the session
 include 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -11,7 +12,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        echo "<script>alert('Login successful!');</script>";
+        // Fetch user data
+        $user = $result->fetch_assoc();
+        
+        // Save user info in session
+        $_SESSION['user'] = [
+            'id' => $user['id'],
+            'email' => $user['email']
+        ];
+
+        // Redirect to index.php after successful login
+        header("Location: index.php");
+        exit();
     } else {
         echo "<script>alert('Invalid email or code. Try again.');</script>";
     }
