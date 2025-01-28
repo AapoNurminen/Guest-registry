@@ -24,3 +24,7 @@ CREATE TABLE IF NOT EXISTS qr_scans (
     scanned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+ALTER TABLE qr_scans
+    ADD COLUMN space_id INT DEFAULT NULL,
+    ADD FOREIGN KEY (space_id) REFERENCES spaces(id);
