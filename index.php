@@ -23,11 +23,13 @@ if ($result && $result->num_rows > 0) {
 
 // Check if a space is selected
 $selected_space = null;
+$selected_space_id = null;
 if (isset($_GET['id'])) {
     $space_id = $_GET['id'];
     foreach ($spaces as $space) {
         if ($space['id'] == $space_id) {
             $selected_space = $space['space_name'];
+            $selected_space_id = $space['id'];
             break;
         }
     }
@@ -101,13 +103,17 @@ if (isset($_GET['id'])) {
             // Display the scanned content
             document.getElementById('qr-result-text').textContent = content;
 
-            // Optionally, you can send the scanned data to the server for further processing
+            // Get the selected space ID from the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const spaceId = urlParams.get('id');
+
+            // Send the scanned data and space ID to the server for further processing
             fetch('process_qr.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ qr_content: content }),
+                body: JSON.stringify({ qr_content: content, space_id: spaceId }),
             })
             .then(response => response.json())
             .then(data => {
